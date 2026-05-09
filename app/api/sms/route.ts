@@ -35,6 +35,7 @@ import {
   addDailySpend,
 } from "@/lib/ratelimit";
 import { estimateOutboundCostUsd } from "@/lib/sms-cost";
+import { sendSmsViaMsg91 } from "@/lib/msg91";
 import type { StoredMessage } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -194,7 +195,9 @@ export async function POST(req: NextRequest): Promise<Response> {
       console.error("sms: spend update failed", err instanceof Error ? err.message : "");
     }
 
-    return twimlResponse(cleanedReply);
+    // Send reply via MSG91 for guaranteed Indian delivery
+    await sendSmsViaMsg91(from, cleanedReply);
+    return emptyTwimlResponse();
   } catch (err) {
     console.error("sms: unexpected error", err instanceof Error ? err.message : "");
     return emptyTwimlResponse();
