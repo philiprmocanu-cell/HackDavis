@@ -1,31 +1,14 @@
 {
-  "name": "rithik-ai",
-  "version": "0.1.0",
+  "name": "sms-gateway-openai-relay",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "start": "node server.js",
+    "register-webhook": "node register-webhook.mjs"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.95.1",
-    "@upstash/redis": "^1.38.0",
-    "next": "16.2.6",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "recharts": "^3.8.1",
-    "twilio": "^6.0.2",
-    "zod": "^4.4.3"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.6",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "openai": "^4.73.0"
   }
 }
