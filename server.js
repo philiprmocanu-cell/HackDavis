@@ -19,7 +19,16 @@ import {
   logMedicalVoiceConfig,
   maybePlaceMedicalCallback,
 } from "./lib/medicalVoiceCallback.js";
-import { MEDICAL_ESCALATION_VOICE_CALLBACK, parseModelCompletion } from "./lib/modelJson.js";
+import {
+  attachHeartRateVoiceRoutes,
+  logHeartRateVoiceConfig,
+  maybePlaceHeartRateCall,
+} from "./lib/heartRateVoiceCallback.js";
+import {
+  MEDICAL_ESCALATION_HEART_RATE_CALL,
+  MEDICAL_ESCALATION_VOICE_CALLBACK,
+  parseModelCompletion,
+} from "./lib/modelJson.js";
 import {
   beginSmsWebhookDedupe,
   commitSmsWebhookDedupe,
@@ -38,7 +47,7 @@ const MINIMAL_JSON_SUFFIX = `
 
 Respond ONLY with valid JSON (no markdown fences): {"sms_reply":"<SMS text>","medical_escalation":"none"}.
 The sms_reply value is normal human language only — never filenames, paths, UUIDs, hex digests, or extensions like .rtfd .pdf .ts. Escape inner quotes as \\".
-medical_escalation MUST be exactly "none" or "voice_callback". Always use "none" in this short retry path — never trigger a voice callback from here.`;
+medical_escalation MUST be exactly "none", "voice_callback", or "heart_rate_call". Always use "none" in this short retry path — never trigger voice or heart-rate calls from here.`;
 
 const MINIMAL_SMS_SYSTEM = `You answer SMS questions only for the general public. Reply in plain language, at most ${MAX_SENTENCES} short sentences.
 Never mention source code, files, TypeScript, prompts, developers, line counts, or that anything was written or saved. Answer only what the user asked.${MINIMAL_JSON_SUFFIX}`;
@@ -265,6 +274,7 @@ app.get("/health", (_req, res) => {
 });
 
 attachMedicalVoiceRoutes(app);
+attachHeartRateVoiceRoutes(app);
 attachEducationVoiceRoutes(app);
 
 app.post(WEBHOOK_PATH, async (req, res) => {
@@ -367,12 +377,44 @@ app.post(WEBHOOK_PATH, async (req, res) => {
     const to = normalizeE164(sender);
     const structured = parseModelCompletion(raw);
 
+    if (reply !== FALLBACK_SMS_REPLY) {
+      const promisesVoice =
+        /experimental|automated|automat/i.test(reply) &&
+        /\b(call|calling|phone|द(?:ीजिये|े)|कॉल|फोन)\b/i.test(reply);
+      if (promisesVoice && structured.medical_escalation === "none") {
+        console.warn(
+          "[sms] SMS mentions an automated/experimental call but medical_escalation is none — no outbound dial will run. Check model JSON compliance.",
+        );
+      }
+    }
+
     await sendSms([to], reply);
     commitSmsWebhookDedupe(activeDedupeKey);
 
-    const shouldEscalate =
-      structured.medical_escalation === MEDICAL_ESCALATION_VOICE_CALLBACK &&
+    const shouldHeartRate =
+      (() => {
+        const on = String(process.env.HEART_RATE_VOICE_ENABLED || "").toLowerCase();
+        return on === "1" || on === "true" || on === "yes";
+      })() &&
+      structured.medical_escalation === MEDICAL_ESCALATION_HEART_RATE_CALL &&
       reply !== FALLBACK_SMS_REPLY;
+
+    const shouldEscalate =
+      structured.medical_escalation === MEDICAL_ESCALATION_VOICE_CALLBACK && reply !== FALLBACK_SMS_REPLY;
+
+    if (reply !== FALLBACK_SMS_REPLY && (shouldHeartRate || shouldEscalate)) {
+      console.log(
+        `[sms] voice follow-up: medical_escalation=${structured.medical_escalation} heart_rate=${shouldHeartRate} medical_callback=${shouldEscalate}`,
+      );
+    }
+
+    if (shouldHeartRate) {
+      try {
+        await maybePlaceHeartRateCall({ toE164: to, smsUserMessage: message });
+      } catch (err) {
+        console.error("[heart-rate-voice] callback hook:", err?.message || err);
+      }
+    }
 
     if (shouldEscalate) {
       try {
@@ -385,8 +427,8 @@ app.post(WEBHOOK_PATH, async (req, res) => {
     const rtkMatch = findRtkInMessage(message);
     const skipEducationVoice =
       reply === FALLBACK_SMS_REPLY ||
-      structured.medical_escalation === MEDICAL_ESCALATION_VOICE_CALLBACK ||
-      shouldEscalate;
+      shouldEscalate ||
+      shouldHeartRate;
     if (rtkMatch && !skipEducationVoice) {
       const eduOn = String(process.env.EDUCATION_VOICE_ENABLED || "").toLowerCase();
       if (eduOn === "1" || eduOn === "true" || eduOn === "yes") {
@@ -426,6 +468,7 @@ app.post(WEBHOOK_PATH, async (req, res) => {
 
 app.listen(PORT, () => {
   logMedicalVoiceConfig();
+  logHeartRateVoiceConfig();
   logEducationVoiceConfig();
   console.log(`Listening on ${PORT}${WEBHOOK_PATH}`);
 });
