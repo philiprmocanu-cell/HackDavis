@@ -33,8 +33,17 @@ import {
   beginSmsWebhookDedupe,
   commitSmsWebhookDedupe,
   rollbackSmsWebhookDedupe,
+  smsBurstDedupeKey,
   smsReceivedDedupeKey,
 } from "./lib/smsWebhookDedupe.js";
+import {
+  canSendQuotaExceededNotice,
+  defaultQuotaExceededMessage,
+  markQuotaExceededNotified,
+  smsPhoneQuotaConfigured,
+  smsPhoneQuotaRecordOutbound,
+  smsPhoneQuotaStatus,
+} from "./lib/smsPhoneQuota.js";
 
 dotenv.config();
 
@@ -234,25 +243,71 @@ function normalizeE164(sender) {
   return s.startsWith("+") ? s : `+${s}`;
 }
 
-async function sendSms(phoneNumbers, text) {
+function smsWebhookDebugEnabled() {
+  const v = String(process.env.SMS_WEBHOOK_DEBUG || "").toLowerCase();
+  return v === "1" || v === "true" || v === "yes";
+}
+
+function maskPhoneForLog(raw) {
+  const t = String(raw ?? "").replace(/\s/g, "");
+  if (!t) return "(empty)";
+  if (t.length <= 4) return "****";
+  return `…${t.slice(-4)}`;
+}
+
+/**
+ * Queue outbound SMS via sms-gate cloud API. Prefer setting SMSGATE_DEVICE_ID so sends use the same
+ * phone as inbound webhooks — omitting it can target a random or offline device (no SMS received).
+ *
+ * @param {string[]} phoneNumbers E.164 recipients
+ * @param {string} text
+ * @param {{ webhookEventId?: string }} [opts] inbound webhook top-level `id` for API idempotency on retries
+ */
+async function sendSms(phoneNumbers, text, opts = {}) {
   const user = process.env.SMSGATE_CLOUD_USERNAME;
   const pass = process.env.SMSGATE_CLOUD_PASSWORD;
   const base = process.env.SMSGATE_CLOUD_BASE_URL;
   const auth = Buffer.from(`${user}:${pass}`).toString("base64");
-  const res = await fetch(`${base}/3rdparty/v1/messages`, {
+  const deviceId = String(process.env.SMSGATE_DEVICE_ID || "").trim();
+  const skipPhone =
+    String(process.env.SMSGATE_SKIP_PHONE_VALIDATION || "").toLowerCase() === "1" ||
+    String(process.env.SMSGATE_SKIP_PHONE_VALIDATION || "").toLowerCase() === "true";
+  const activeWithin = Number(process.env.SMSGATE_DEVICE_ACTIVE_WITHIN_HOURS);
+  const params = new URLSearchParams();
+  if (skipPhone) params.set("skipPhoneValidation", "true");
+  if (Number.isFinite(activeWithin) && activeWithin > 0) {
+    params.set("deviceActiveWithin", String(activeWithin));
+  }
+  const qs = params.toString();
+  const url = `${String(base).replace(/\/$/, "")}/3rdparty/v1/messages${qs ? `?${qs}` : ""}`;
+
+  const payload = {
+    textMessage: { text },
+    phoneNumbers,
+  };
+  if (deviceId) payload.deviceId = deviceId;
+
+  const useWhId =
+    String(process.env.SMSGATE_OUTBOUND_ID_FROM_WEBHOOK ?? "1").toLowerCase() !== "0" &&
+    String(process.env.SMSGATE_OUTBOUND_ID_FROM_WEBHOOK ?? "1").toLowerCase() !== "false" &&
+    String(process.env.SMSGATE_OUTBOUND_ID_FROM_WEBHOOK ?? "1").toLowerCase() !== "no";
+  const wid = typeof opts.webhookEventId === "string" ? opts.webhookEventId.trim() : "";
+  if (useWhId && wid) {
+    const safe = wid.replace(/[^a-zA-Z0-9._-]+/g, "_").slice(0, 120);
+    if (safe) payload.id = `wh_${safe}`;
+  }
+
+  const res = await fetch(url, {
     method: "POST",
     headers: {
       Authorization: `Basic ${auth}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      textMessage: { text },
-      phoneNumbers,
-    }),
+    body: JSON.stringify(payload),
   });
-  const body = await res.text();
-  if (!res.ok) throw new Error(`SMS send failed ${res.status}: ${body}`);
-  return body;
+  const resBody = await res.text();
+  if (!res.ok) throw new Error(`SMS send failed ${res.status}: ${resBody}`);
+  return resBody;
 }
 
 const openai = process.env.OPENAI_API_KEY
@@ -295,6 +350,7 @@ app.post(WEBHOOK_PATH, async (req, res) => {
 
   /** Active dedupe slot for this webhook; rolled back if handler errors before outbound SMS succeeds. */
   let activeDedupeKey = null;
+  let activeBurstKey = null;
 
   try {
     const body = req.body;
@@ -307,19 +363,75 @@ app.post(WEBHOOK_PATH, async (req, res) => {
     const message = normalizeInboundSms(rawInbound);
     const sender = payload.sender ?? payload.phoneNumber;
     if (!sender || !message) {
+      if (smsWebhookDebugEnabled()) {
+        console.warn("[sms-debug] skipped: need non-empty payload.message and sender (check sms-gate payload / permissions)");
+      }
       return res.status(200).json({ ok: true, skipped: true });
     }
 
     const { key: dedupeKey } = smsReceivedDedupeKey(body);
-    if (!beginSmsWebhookDedupe(dedupeKey)) {
-      console.warn("[sms] duplicate webhook skipped (sms-gate retry or concurrent delivery)");
+    const burstKey = smsBurstDedupeKey(sender, message);
+    if (smsWebhookDebugEnabled()) {
+      const mid = typeof payload.messageId === "string" ? payload.messageId.trim() : "";
+      console.log("[sms-debug] inbound sms:received", {
+        dedupeKey: dedupeKey ? `${dedupeKey.slice(0, 24)}…` : "(null)",
+        burstKey: burstKey ? `${burstKey.slice(0, 24)}…` : "(off)",
+        webhookEventId: typeof body.id === "string" ? body.id : "(missing)",
+        messageIdPrefix: mid ? `${mid.slice(0, 10)}…` : "(missing)",
+        receivedAt: typeof payload.receivedAt === "string" ? payload.receivedAt : "(missing)",
+        deviceId: body.deviceId ?? payload.deviceId ?? "(none)",
+        sender: maskPhoneForLog(sender),
+        messageChars: message.length,
+      });
+    }
+
+    const dedupe = beginSmsWebhookDedupe(dedupeKey, burstKey);
+    if (dedupe.status === "duplicate_committed") {
+      if (smsWebhookDebugEnabled()) {
+        console.warn("[sms-debug] duplicate suppressed (same dedupe key as prior success)", dedupeKey?.slice(0, 28));
+      }
+      console.warn("[sms] duplicate webhook skipped (already replied for this inbound SMS)");
       return res.status(200).json({ ok: true, skipped: true, duplicate: true });
     }
+    if (dedupe.status === "duplicate_inflight") {
+      const ra = Math.max(5, Math.min(30, Number(process.env.SMS_WEBHOOK_INFLIGHT_RETRY_AFTER_SEC) || 10));
+      console.warn(
+        `[sms] duplicate while primary still processing — HTTP 503 Retry-After ${ra}s (avoid losing SMS if primary later fails)`,
+      );
+      return res
+        .status(503)
+        .set("Retry-After", String(ra))
+        .json({ ok: false, error: "primary_inflight", retry_after_sec: ra });
+    }
     activeDedupeKey = dedupeKey;
+    activeBurstKey = burstKey;
+
+    const to = normalizeE164(sender);
+    if (smsPhoneQuotaConfigured()) {
+      const quota = smsPhoneQuotaStatus(to);
+      if (!quota.allowed) {
+        console.warn(
+          `[sms] per-phone quota exceeded (${quota.used}/${quota.max}) for ${maskPhoneForLog(to)}`,
+        );
+        const webhookEventIdEarly = typeof body.id === "string" ? body.id.trim() : "";
+        if (canSendQuotaExceededNotice(to)) {
+          try {
+            await sendSms([to], defaultQuotaExceededMessage(), { webhookEventId: webhookEventIdEarly });
+            markQuotaExceededNotified(to);
+          } catch (err) {
+            console.error("[sms] quota notice SMS failed:", err?.message || err);
+            rollbackSmsWebhookDedupe(activeDedupeKey, activeBurstKey);
+            return res.status(500).json({ error: "quota_notice_failed" });
+          }
+        }
+        commitSmsWebhookDedupe(activeDedupeKey, activeBurstKey);
+        return res.status(200).json({ ok: true, skipped: true, quota_exceeded: true });
+      }
+    }
 
     if (!openai) {
       console.error("OPENAI_API_KEY is not set");
-      rollbackSmsWebhookDedupe(activeDedupeKey);
+      rollbackSmsWebhookDedupe(activeDedupeKey, activeBurstKey);
       return res.status(500).json({ error: "missing_openai_key" });
     }
 
@@ -374,7 +486,6 @@ app.post(WEBHOOK_PATH, async (req, res) => {
       reply = FALLBACK_SMS_REPLY;
     }
 
-    const to = normalizeE164(sender);
     const structured = parseModelCompletion(raw);
 
     if (reply !== FALLBACK_SMS_REPLY) {
@@ -388,8 +499,17 @@ app.post(WEBHOOK_PATH, async (req, res) => {
       }
     }
 
-    await sendSms([to], reply);
-    commitSmsWebhookDedupe(activeDedupeKey);
+    const webhookEventId = typeof body.id === "string" ? body.id.trim() : "";
+    await sendSms([to], reply, { webhookEventId });
+    if (smsPhoneQuotaConfigured()) smsPhoneQuotaRecordOutbound(to);
+    if (smsWebhookDebugEnabled()) {
+      console.log("[sms-debug] outbound reply queued via sms-gate", {
+        to: maskPhoneForLog(to),
+        replyChars: reply.length,
+        webhookEventId: webhookEventId || "(none)",
+      });
+    }
+    commitSmsWebhookDedupe(activeDedupeKey, activeBurstKey);
 
     const shouldHeartRate =
       (() => {
@@ -460,7 +580,7 @@ app.post(WEBHOOK_PATH, async (req, res) => {
 
     return res.status(200).json({ ok: true });
   } catch (err) {
-    rollbackSmsWebhookDedupe(activeDedupeKey);
+    rollbackSmsWebhookDedupe(activeDedupeKey, activeBurstKey);
     console.error(err);
     return res.status(500).json({ error: "handler_failed" });
   }
@@ -470,5 +590,10 @@ app.listen(PORT, () => {
   logMedicalVoiceConfig();
   logHeartRateVoiceConfig();
   logEducationVoiceConfig();
+  if (process.env.SMSGATE_CLOUD_BASE_URL && !String(process.env.SMSGATE_DEVICE_ID || "").trim()) {
+    console.warn(
+      "[sms] SMSGATE_DEVICE_ID is unset — outbound /3rdparty/v1/messages may pick a random device; replies can go missing while the gateway toggles. Set to the same device_id you use for webhooks.",
+    );
+  }
   console.log(`Listening on ${PORT}${WEBHOOK_PATH}`);
 });

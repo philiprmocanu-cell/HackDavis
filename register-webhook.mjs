@@ -26,6 +26,8 @@ const registration = {
   ...(deviceId ? { device_id: deviceId } : {}),
 };
 
+console.log("[register-webhook] POST body:", JSON.stringify(registration));
+
 const res = await fetch(`${base.replace(/\/$/, "")}/3rdparty/v1/webhooks`, {
   method: "POST",
   headers: {

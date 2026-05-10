@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
+    "stop": "node scripts/stop-server.mjs",
+    "restart": "npm run stop && node server.js",
     "register-webhook": "node register-webhook.mjs"
   },
   "dependencies": {
