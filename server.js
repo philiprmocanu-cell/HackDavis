@@ -391,13 +391,25 @@ app.post(WEBHOOK_PATH, async (req, res) => {
       const eduOn = String(process.env.EDUCATION_VOICE_ENABLED || "").toLowerCase();
       if (eduOn === "1" || eduOn === "true" || eduOn === "yes") {
         try {
-          const script = await generateEducationVoiceScript({
-            openai,
-            userMessage: message,
-            directoryLine: rtkMatch.directoryLine,
-            code: rtkMatch.code,
-          });
-          await maybePlaceEducationVoiceCall({ toE164: to, script });
+          const eduMode = String(process.env.EDUCATION_VOICE_MODE || "tts").trim().toLowerCase();
+          const useConversation =
+            eduMode === "conversation" || eduMode === "agent" || eduMode === "convai";
+
+          if (useConversation) {
+            await maybePlaceEducationVoiceCall({
+              toE164: to,
+              lesson: { code: rtkMatch.code, directoryLine: rtkMatch.directoryLine },
+              userMessage: message,
+            });
+          } else {
+            const script = await generateEducationVoiceScript({
+              openai,
+              userMessage: message,
+              directoryLine: rtkMatch.directoryLine,
+              code: rtkMatch.code,
+            });
+            await maybePlaceEducationVoiceCall({ toE164: to, script });
+          }
         } catch (err) {
           console.error("[education-voice] callback hook:", err?.message || err);
         }
