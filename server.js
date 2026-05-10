@@ -237,10 +237,149 @@ function verifySignature(secretKey, rawPayload, timestamp, signature) {
   }
 }
 
-function normalizeE164(sender) {
-  const s = String(sender).replace(/\s/g, "");
-  if (!s) return s;
-  return s.startsWith("+") ? s : `+${s}`;
+/** ITU-T E.164: optional + then 7–15 digits, first digit non-zero. */
+const E164_REGEX = /^\+[1-9]\d{6,14}$/;
+
+/** India mobile/landline NSN after country code 91: 10 digits, first digit 1–9. */
+const IN_MSISDN_91_BODY_REGEX = /^91[1-9]\d{9}$/;
+
+function digitsOnly(s) {
+  return String(s ?? "").replace(/\D/g, "");
+}
+
+/**
+ * sms-gate sometimes shows Indian senders as +01191… (NANP intl access "011" before country code 91).
+ * Strip optional 00 / 011 / national trunk 0 so downstream sees 91XXXXXXXXXX or 10-digit national.
+ */
+function stripIntlDialGarbage(digitsOnlyStr) {
+  let x = digitsOnly(digitsOnlyStr);
+  while (x.startsWith("00")) x = x.slice(2);
+  while (x.startsWith("011")) x = x.slice(3);
+  while (x.startsWith("0")) x = x.slice(1);
+  return x;
+}
+
+/**
+ * Parse digit string into +91XXXXXXXXXX when SMS_REPLY_DEFAULT_CC=91.
+ * Expects `digitString` already passed through stripIntlDialGarbage (see normalizeSmsReplyE164).
+ */
+function extractIndianMsisdnE164(digitString) {
+  let x = digitsOnly(digitString);
+  if (!x) return null;
+  while (x.startsWith("9191") && x.length >= 14) {
+    x = `91${x.slice(4)}`;
+  }
+  if (x.startsWith("91")) {
+    if (x.length >= 12 && IN_MSISDN_91_BODY_REGEX.test(x.slice(0, 12))) {
+      return `+${x.slice(0, 12)}`;
+    }
+    if (x.length > 12) {
+      for (let i = 0; i <= x.length - 12; i++) {
+        const sub = x.slice(i, i + 12);
+        if (IN_MSISDN_91_BODY_REGEX.test(sub)) return `+${sub}`;
+      }
+    }
+    return null;
+  }
+  if (x.length === 10 && /^[1-9]\d{9}$/.test(x)) {
+    return `+91${x}`;
+  }
+  return null;
+}
+
+/**
+ * Turn sms-gate `sender` / `phoneNumber` into E.164 for outbound replies.
+ * Returns null for short codes, alphanumeric senders, or ambiguous fragments (sms-gate cannot parse those).
+ */
+function normalizeSmsReplyE164(senderRaw) {
+  const raw = String(senderRaw ?? "").trim();
+  if (!raw) return null;
+
+  const stripped = raw.replace(/[\s().-]/g, "");
+  const ccEnv = String(process.env.SMS_REPLY_DEFAULT_CC || "").trim().replace(/\D/g, "");
+  let digitBody = stripped.startsWith("+") ? digitsOnly(stripped.slice(1)) : digitsOnly(stripped);
+  digitBody = stripIntlDialGarbage(digitBody);
+
+  if (ccEnv === "91") {
+    return extractIndianMsisdnE164(digitBody);
+  }
+
+  // CC unset: infer common India inbound shapes (sms-gate often sends 10-digit national without +).
+  if (!ccEnv) {
+    if (/^[6789]\d{9}$/.test(digitBody)) {
+      return `+91${digitBody}`;
+    }
+    if (digitBody.length === 12 && IN_MSISDN_91_BODY_REGEX.test(digitBody)) {
+      return `+${digitBody}`;
+    }
+    const indiaWindow = extractIndianMsisdnE164(digitBody);
+    if (indiaWindow) return indiaWindow;
+  }
+
+  if (stripped.startsWith("+")) {
+    const d = digitBody;
+    if (!d) return null;
+    const out = `+${d}`;
+    return E164_REGEX.test(out) ? out : null;
+  }
+
+  let d = digitBody;
+  if (!d) return null;
+
+  if (d.startsWith("00") && d.length >= 10) {
+    const rest = d.slice(2);
+    const tryOut = `+${rest}`;
+    if (E164_REGEX.test(tryOut)) return tryOut;
+  }
+
+  // US / NANP: leading 1 + 10-digit national
+  if (d.length === 11 && d.startsWith("1")) {
+    const tryOut = `+${d}`;
+    return E164_REGEX.test(tryOut) ? tryOut : null;
+  }
+
+  if (ccEnv) {
+    let national = d;
+    if (national.startsWith("0")) national = national.slice(1);
+    if (!national) return null;
+    if (national.startsWith(ccEnv) && national.length > ccEnv.length) {
+      const tryOut = `+${national}`;
+      if (E164_REGEX.test(tryOut)) return tryOut;
+    }
+    const tryOut = `+${ccEnv}${national}`;
+    if (E164_REGEX.test(tryOut)) return tryOut;
+  }
+
+  // Already international digits without + (e.g. 447911123456)
+  if (d.length >= 11 && !d.startsWith("0")) {
+    const tryOut = `+${d}`;
+    if (E164_REGEX.test(tryOut)) return tryOut;
+  }
+
+  return null;
+}
+
+/**
+ * Prefer `sender`, then deprecated `phoneNumber`; sms-gate may send national digits without + on either.
+ * @returns {{ e164: string, rawUsed: string } | { e164: null, rawUsed: string }}
+ */
+function resolveInboundSenderToE164(payload) {
+  const p = payload || {};
+  const seen = new Set();
+  const candidates = [];
+  for (const key of ["sender", "phoneNumber"]) {
+    const v = p[key];
+    if (v == null) continue;
+    const s = String(v).trim();
+    if (!s || seen.has(s)) continue;
+    seen.add(s);
+    candidates.push(s);
+  }
+  for (const raw of candidates) {
+    const e164 = normalizeSmsReplyE164(raw);
+    if (e164) return { e164, rawUsed: raw };
+  }
+  return { e164: null, rawUsed: candidates[0] ?? "" };
 }
 
 function smsWebhookDebugEnabled() {
@@ -381,6 +520,10 @@ app.post(WEBHOOK_PATH, async (req, res) => {
         receivedAt: typeof payload.receivedAt === "string" ? payload.receivedAt : "(missing)",
         deviceId: body.deviceId ?? payload.deviceId ?? "(none)",
         sender: maskPhoneForLog(sender),
+        senderDigitLen: digitsOnly(sender).length,
+        phoneNumberDigitLen:
+          payload.phoneNumber != null ? digitsOnly(String(payload.phoneNumber)).length : null,
+        smsReplyDefaultCc: String(process.env.SMS_REPLY_DEFAULT_CC || "").trim().replace(/\D/g, "") || "(unset)",
         messageChars: message.length,
       });
     }
@@ -406,7 +549,18 @@ app.post(WEBHOOK_PATH, async (req, res) => {
     activeDedupeKey = dedupeKey;
     activeBurstKey = burstKey;
 
-    const to = normalizeE164(sender);
+    const resolvedSender = resolveInboundSenderToE164(payload);
+    const to = resolvedSender.e164;
+    if (!to) {
+      const raw = resolvedSender.rawUsed || sender;
+      const dLen = digitsOnly(raw).length;
+      console.warn(
+        `[sms] skip reply: cannot normalize sender to E.164 (masked=${maskPhoneForLog(raw)}, digitLen=${dLen}). With SMS_REPLY_DEFAULT_CC=91, only +91 plus exactly 10 national digits (or a 12-digit 91… window inside garbage) is accepted — short codes (e.g. 5-digit senders) cannot receive replies. For US national numbers use SMS_REPLY_DEFAULT_CC=1 instead.`,
+      );
+      commitSmsWebhookDedupe(activeDedupeKey, activeBurstKey);
+      return res.status(200).json({ ok: true, skipped: true, reason: "invalid_sender_e164" });
+    }
+
     if (smsPhoneQuotaConfigured()) {
       const quota = smsPhoneQuotaStatus(to);
       if (!quota.allowed) {
@@ -501,6 +655,7 @@ app.post(WEBHOOK_PATH, async (req, res) => {
 
     const webhookEventId = typeof body.id === "string" ? body.id.trim() : "";
     await sendSms([to], reply, { webhookEventId });
+    console.log(`[sms] outbound SMS queued for ${maskPhoneForLog(to)} (${reply.length} chars)`);
     if (smsPhoneQuotaConfigured()) smsPhoneQuotaRecordOutbound(to);
     if (smsWebhookDebugEnabled()) {
       console.log("[sms-debug] outbound reply queued via sms-gate", {
@@ -593,6 +748,11 @@ app.listen(PORT, () => {
   if (process.env.SMSGATE_CLOUD_BASE_URL && !String(process.env.SMSGATE_DEVICE_ID || "").trim()) {
     console.warn(
       "[sms] SMSGATE_DEVICE_ID is unset — outbound /3rdparty/v1/messages may pick a random device; replies can go missing while the gateway toggles. Set to the same device_id you use for webhooks.",
+    );
+  }
+  if (!String(process.env.SMS_REPLY_DEFAULT_CC || "").trim()) {
+    console.warn(
+      "[sms] SMS_REPLY_DEFAULT_CC is unset — 10-digit Indian mobiles (6–9…), 12-digit 91…, and +01191… (NANP intl prefix) are inferred. Set SMS_REPLY_DEFAULT_CC=91 for strict sender parsing.",
     );
   }
   console.log(`Listening on ${PORT}${WEBHOOK_PATH}`);
