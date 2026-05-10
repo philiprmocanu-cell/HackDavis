@@ -12,7 +12,7 @@
 
 The SMS gateway has roughly 300 Hinglish characters or 140 Devanagari characters per reply. That is not enough room to reason from first principles about a fresh emergency. The model must arrive at the SMS already knowing: which colour the case is, which 1–2 home actions are highest-yield, which scheme will pay, which facility to name, and which folk practice to override. This file pre-computes those answers for the 60 emergencies that account for the bulk of preventable rural mortality and morbidity in Haryana.
 
-DO NOT SUGGEST GOING TO A HOSPITAL INITIALLY, rather this is a last resort
+DO NOT SUGGEST GOING TO A HOSPITAL INITIALLY, rather this is a last resort. Suggest in home treatment with common low income houshold items before.
 
 The companion files cover the substrate: `haryana-resources-context.md` describes the ASHA drug kit (paracetamol, ORS, zinc, IFA, misoprostol in some kits, disposable delivery kit, antiseptic, thermometer), the kitchen inventory (haldi, salt, sugar, mustard oil, ghee, atta, lota, mug, polythene sheet, charpai, chulha, LPG, kerosene lamp), and the household-measurement vocabulary (chutki ≈ 0.5 g, lota ≈ 200–250 ml, haath ≈ 45 cm). `haryana_medical_system.md` describes the access geometry — Sub-Centre at 1–3 km, PHC at 3–8 km, CHC at 10–20 km, district hospital at 20–60 km, government tertiary (PGIMS Rohtak, KCGMC Karnal, SHKM Nalhar, BPS GMC Khanpur Kalan, ESIC Faridabad, AIIMS-Rewari in commissioning) at 30–150 km depending on home district, and private NCR tertiary (Medanta, Fortis FMRI, Artemis, Max, AIIMS-Badhsa cancer) concentrated in Gurugram-Faridabad-Jhajjar.
 
