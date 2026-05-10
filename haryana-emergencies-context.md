@@ -394,3 +394,528 @@ This file's tone follows the system prompt: Hindi/Haryanvi term first with Engli
 **Cost / scheme:** PM-JAY covers eye trauma surgery at empanelled centres.
 
 **SMS micro-script (Hinglish):** "Tezaab gaya to 20 min lagataar saaf paani aankh me daalo, sir us taraf jhuka ke. Kajal/dudh/surma mat daalo. Kachra ho to ragdo mat — paani se dho ke saaf kapde se dhakno. Civil Hospital ya PGIMS Rohtak."
+
+### 11. Severe burn — flame, scald, chulha, electric (jal gaya)
+
+**What the caller likely says:** "Saree chulhe se lag gayi, ma jal gayi, full back jala hai" / "Bachhe ke upar daal gir gayi, chhati jal gayi". The chulha-saree burn is one of the most common injury causes in rural Haryana adult women — synthetic dupattas catch quickly.
+
+**Triage:** 108-NOW for any burn >10% body surface, any burn on face/neck/hands/feet/genitals, any electrical burn, any inhalation (singed nose hair, hoarse voice, smoky breath), any deep/charred burn, any burn in a child or elderly person. PHC for small superficial burns.
+
+**Do RIGHT NOW:**
+1. STOP THE BURNING — smother flames with a thick cotton dhoti/sheet. Do not let the patient run (oxygen feeds the fire). Roll them on the ground.
+2. Remove burning/smouldering clothes ONLY if not stuck to skin. Cut around stuck cloth — do not pull.
+3. Cool with running clean water for at least 20 minutes by the clock. Use a lota under a hand pump, or pour from a bucket continuously. Cool water — not ice, not freezing water.
+4. Remove rings, bangles, kada, bichhua, watch, belt before swelling.
+5. Cover with clean cling-film if available, or a CLEAN dry cotton cloth (ironed if possible — heat sterilises it).
+6. Keep warm — burns lose heat. Wrap a dry blanket around the unburnt parts.
+7. Call 108.
+8. If conscious and not vomiting, give sips of ORS (1 lota with the salt-sugar recipe).
+
+**Do NOT:**
+- Do NOT apply ghee, mustard oil, coconut oil, butter, toothpaste, ash (raakh), kapur, haldi paste, ink, or aloe juice to the burn. All are documented in Haryana burns-unit admissions as infection causes.
+- Do NOT burst blisters.
+- Do NOT use ice or ice-water — causes frostbite on damaged tissue.
+- Do NOT delay for the local "jala-thik-karne wala" — burns specialists are at PGIMS, Safdarjung, or AIIMS New Delhi.
+
+**Where to go:** PGIMS Rohtak has a burns unit. Safdarjung Hospital New Delhi (one of India's largest burns centres). AIIMS New Delhi. KCGMC Karnal for north Haryana.
+
+**Cost / scheme:** Chirayu / PM-JAY covers burns admission and skin grafting at empanelled hospitals. Government burns units charge nominal fees.
+
+**SMS micro-script (Hinglish):** "Aag bujhao kapde se. Jala kapda agar chipka hai to mat kheencho. 20 min thanda saaf paani daalo lagataar. Ghee/tel/toothpaste/raakh KUCHH MAT lagao. Saaf kapde se dhakdo. 108. PGIMS Rohtak ya Safdarjung."
+
+### 12. Electric shock / electrocution (bijli ka jhatka)
+
+**What the caller likely says:** "Pump theek karte time current laga, behosh ho gaya."
+
+**Triage:** 108-NOW for any electrocution with loss of consciousness, burn at entry/exit point, fall from height, or chest pain. Even a "small shock" can cause delayed cardiac arrhythmia for 24 hours.
+
+**Do RIGHT NOW:**
+1. **First — switch off the supply** at the mains. Do NOT touch the patient until current is cut.
+2. If you cannot switch off, push the patient away from the wire using a DRY wooden stick, dry bamboo, or plastic broom — not metal, not wet wood.
+3. Once safe, check breathing. If absent, start chest compressions (heel of hand on lower breastbone, push 5–6 cm deep at ~100/min).
+4. Look for entry and exit burns (often on hands and feet) — cover with clean dry cloth.
+5. Lay flat unless spine injury suspected.
+6. Call 108.
+
+**Do NOT:**
+- Do NOT touch the patient with wet hands or while standing in water.
+- Do NOT pour water on the patient until power is confirmed off.
+- Do NOT assume "he is fine, he stood up" — arrhythmia can occur hours later.
+
+**Where to go:** District hospital with ECG monitoring + ICU. PGIMS Rohtak. Cardiac monitoring for 24 h is essential.
+
+**Cost / scheme:** Chirayu / PM-JAY at empanelled hospitals.
+
+**SMS micro-script (Hinglish):** "Pehle main switch band karo. Sookhi lakdi/bambu se dhakka do. Saans nahi to seene par dabaye 100/min. Burn ko saaf kapde se dhakno. 108 — 24 ghante monitoring chahiye."
+
+### 13. Acute MI / chest pain syndrome (seene mein dard, paseena)
+
+**What the caller likely says:** "Pita ji ko seene mein bahut dard hai, paseena aa raha hai, baayen haath me bhi dard."
+
+**Triage:** 108-NOW. Crushing or pressure-like chest pain >15 min, often with sweating, nausea, breathlessness, pain radiating to left arm/jaw/back. In Haryana, the diabetic and hypertensive prevalence (15.1% and 26.2% of adults) means MI risk is high and "silent MI" in diabetics can present as just sweating + weakness.
+
+**Do RIGHT NOW:**
+1. Sit the patient up at 45°, supported by pillows on the charpai. Do NOT make him walk.
+2. Loosen tight clothes around the chest.
+3. **Aspirin 300 mg chewable** (4 tablets of 75 mg aspirin like Ecosprin, OR one 325 mg uncoated aspirin) — chew, do not swallow whole. Skip ONLY if known aspirin allergy or active stomach bleed. First-aid evidence shows survival benefit for early aspirin in non-traumatic chest pain.
+4. If the patient has a prescribed sorbitrate / nitroglycerine tablet: place one under the tongue.
+5. Call 108.
+6. Stay with patient. If breathing stops, start chest compressions immediately (push hard 5–6 cm, ~100/min, on lower breastbone).
+
+**Do NOT:**
+- Do NOT wait to "see if it passes". Time = heart muscle.
+- Do NOT give water or food.
+- Do NOT make him lie flat — sitting up helps breathing.
+- Do NOT drive him on the back of a motorcycle to PHC.
+
+**Where to go:** Cath-lab capable hospital for primary PCI within 90 min ideally. PGIMS Rohtak (cardiology), Medanta Gurugram (cardiac sciences CoE), Fortis FMRI Gurugram, Artemis. Civil hospitals in Faridabad, Gurugram, Karnal also receive STEMI cases. Tell 108 explicitly: "seene me dard, MI ho sakta hai".
+
+**Cost / scheme:** Chirayu / PM-JAY covers angiogram and angioplasty at empanelled hospitals. Stent + PCI is in the package.
+
+**SMS micro-script (Hinglish):** "108 abhi. Bithao seedha 45 degree. Aspirin 300mg chabhao (allergy nahi to). Sorbitrate ho to jeeb ke neeche rakho. Chalao mat. Medanta/PGIMS Rohtak — cath lab vala hospital."
+
+### 14. Stroke — FAST recognition (lakwa, mooh tedha)
+
+**What the caller likely says:** "Pita ji ka mooh tedha ho gaya, baat saaf nahi nikal rahi, ek hath utha nahi rahe."
+
+**Triage:** 108-NOW. The thrombolysis window is 4.5 hours from symptom onset. <1% of Indian stroke patients reach hospital in time — the SMS can change this.
+
+**Do RIGHT NOW:**
+1. Apply FAST: **F**ace — ask to smile, see if one side droops. **A**rms — ask to raise both arms, see if one drifts down. **S**peech — ask to say a sentence ("aaj khaana achha tha"), check for slurring. **T**ime — note the EXACT minute symptoms started or when patient was last seen normal. The doctor needs this.
+2. Sit patient up 30° supported by pillows.
+3. Do NOTHING by mouth — risk of choking due to swallowing weakness.
+4. Loosen tight clothes.
+5. If unconscious but breathing, place in left-lateral recovery position.
+6. Call 108. Tell them: "Lakwa ka shak hai, FAST positive, time onset [X bajay]."
+
+**Do NOT:**
+- Do NOT give water, juice, sugar, food, or any "stroke kashaya" home brew.
+- Do NOT give aspirin (unlike MI — in stroke, bleeding stroke must be ruled out by CT first).
+- Do NOT massage or apply mustard oil to the face.
+- Do NOT "wait until morning to see" — every 15 minutes lost means more brain dead.
+
+**Where to go:** Hospital with CT scan + stroke-ready protocol. PGIMS Rohtak (neurology). Medanta (stroke unit). Fortis FMRI. AIIMS New Delhi if Delhi-side. KCGMC Karnal for north Haryana. Many smaller district hospitals do not have urgent CT — bypass them and go to the bigger centre.
+
+**Cost / scheme:** Chirayu / PM-JAY covers stroke admission, CT, thrombolysis, and rehab at empanelled hospitals.
+
+**SMS micro-script (Hinglish):** "FAST: chehra tedha? Hath uthate ek girta? Bolne me lapatpati? Time kab shuru hua likho. 108. Khaana paani kuchh nahi. Aspirin mat do. Medanta ya PGIMS — CT scan vala hospital."
+
+### 15. Hypertensive emergency (BP bahut zyada)
+
+**What the caller likely says:** "Mata ji ka BP 220 hai, sir mein bahut dard, dhundla dikh raha hai."
+
+**Triage:** 108-NOW or CHC depending on severity. BP >180/120 with symptoms (severe headache, vision blur, chest pain, breathlessness, confusion, pregnancy) is an emergency. BP >180/120 without symptoms is urgent — CHC same day.
+
+**Do RIGHT NOW:**
+1. Sit calmly. Avoid stress, bright light. Dim the room.
+2. If patient is on regular BP medicine and missed it — give the missed dose with water.
+3. Do not give a "double dose" of BP medicine to "bring it down fast" — sudden BP drop can cause stroke.
+4. Loosen tight clothes around the neck.
+5. Call 108 if any red flag (severe headache, vision change, chest pain, weakness, confusion, pregnancy).
+
+**Do NOT:**
+- Do NOT give a sublingual nifedipine ("Adalat under tongue") — this old practice is now known to cause dangerous BP drops and stroke. Banned in modern guidelines.
+- Do NOT give garlic-honey-lemon home remedies for an acute BP crisis.
+- Do NOT make the patient walk or do any exertion.
+
+**Where to go:** PHC if BP is high but patient stable. CHC if BP very high. District hospital or PGIMS Rohtak for hypertensive encephalopathy / aortic dissection / pulmonary oedema.
+
+**Cost / scheme:** Chirayu / PM-JAY at empanelled hospitals. Janaushadhi Kendra has cheap antihypertensives (amlodipine, telmisartan).
+
+**SMS micro-script (Hinglish):** "Shaant bithao, light kam karo. Apni regular BP dawai missed hai to 1 dose lo. Adalat jeeb ke neeche MAT lo. Sir dard tej, dhundla, garbh me ho to 108. Warna CHC same day."
+
+### 16. Acute heart failure / pulmonary oedema (saans phool rahi, paer soojan)
+
+**What the caller likely says:** "Saans nahi aa rahi, leTna nahi ho raha, paer soojay hai, jhag wali balgam."
+
+**Triage:** 108-NOW. Pink frothy sputum + cannot lie flat = pulmonary oedema.
+
+**Do RIGHT NOW:**
+1. Sit patient bolt upright with legs hanging off the charpai (helps blood pool in legs and reduce lung congestion).
+2. Open windows for air. Switch on fan.
+3. If patient is on regular furosemide (Lasix) and skipped a dose — give one tablet (40 mg) with little water.
+4. Loosen tight clothes.
+5. Call 108. Ask for ALS / oxygen-equipped ambulance.
+
+**Do NOT:**
+- Do NOT lay flat.
+- Do NOT give large volumes of water — this worsens overload.
+- Do NOT give salt or salty food.
+- Do NOT give Eno or any sodium bicarbonate.
+
+**Where to go:** District hospital with ICU or cardiology. PGIMS Rohtak. Medanta, Fortis FMRI, Artemis if covered.
+
+**Cost / scheme:** Chirayu / PM-JAY at empanelled hospitals.
+
+**SMS micro-script (Hinglish):** "Seedha bithao, paer charpai se neeche latkao. Pankha chalao. Lasix lete ho aur miss ki to 1 goli. LeTao mat. Pani zyada nahi. 108 — oxygen valli ambulance. PGIMS ya Medanta."
+
+### 17. Syncope / collapse (behosh ho gaya)
+
+**What the caller likely says:** "Khade-khade gir gaya, kuchh second behosh raha, ab thik hai par kamzori hai."
+
+**Triage:** CHC for first-time simple faint with quick recovery. 108-NOW if: fainting during exertion, fainting from sitting (not standing), chest pain or palpitations before fainting, confusion lasting >2 min, head injury during fall, pregnant, age >60, known heart disease, known diabetic.
+
+**Do RIGHT NOW:**
+1. Lay flat on the charpai. Raise legs up on a folded blanket or pillow (legs above heart level). Most simple faints recover within 1 minute.
+2. Loosen tight clothes around neck and waist.
+3. Once awake, give a glass of nimbu-pani with a chutki of salt and 2 chutki of sugar (oral rehydration, helps if dehydration was the cause).
+4. Check for tongue bite, urine incontinence, jerking — these suggest a seizure rather than a faint, which changes management.
+5. Note exact circumstances — what they were doing, time, last meal, last urine, medicines.
+
+**Do NOT:**
+- Do NOT slap the face to wake.
+- Do NOT pour water on the face.
+- Do NOT prop the head up — keep flat.
+- Do NOT make them walk for at least 10 min after waking.
+
+**Where to go:** PHC for simple faint with no red flag, ECG indicated. CHC or district hospital for any red flag. Cardiac evaluation at PGIMS Rohtak or private cardiac centre if recurrent.
+
+**Cost / scheme:** Chirayu / PM-JAY for cardiac workup at empanelled hospitals.
+
+**SMS micro-script (Hinglish):** "LeTao seedha, paer ooncha utha do takhya pe. Gardan ke kapde dheele. Hosh aane par nimbu-pani namak-cheeni daal kar do. Chest dard, garbh, dil ki bimari ho to 108. Warna PHC me ECG."
+
+### 18. Severe asthma attack (dama ka attack)
+
+**What the caller likely says:** "Dama-attack, inhaler kaam nahi kar raha, baat nahi kar pa rahe."
+
+**Triage:** 108-NOW if: cannot speak full sentences, blue lips/fingertips, drowsy, silent chest (no wheeze because no air moves), peak flow <50% personal best.
+
+**Do RIGHT NOW:**
+1. Sit upright leaning forward, hands on knees (tripod position). Do NOT lie down.
+2. Use the salbutamol/Asthalin/Levolin inhaler: 2 puffs through a SPACER (improvised: cut a 1-litre plastic bottle, make a hole at the closed end for the inhaler, breathe through the open end). Wait 1 min, repeat — up to 6 puffs in 20 min while waiting for ambulance.
+3. If a Budecort/Foracort inhaler is also available, take 2 puffs after the salbutamol.
+4. Open windows. Fan on. Calm patient — panic worsens the attack.
+5. Boil water in a patila, drape a towel over head, breathe steam through nose for 10 min — eases bronchospasm in mild cases.
+6. Call 108.
+
+**Do NOT:**
+- Do NOT use a friend's "old leftover" oral steroid without doctor advice unless patient is a known severe asthmatic with a written action plan.
+- Do NOT exercise or walk to the PHC if severe.
+- Do NOT smoke or be near chulha smoke.
+
+**Where to go:** PHC for moderate. CHC or district hospital with nebulisation + oxygen for severe. PGIMS Rohtak respiratory medicine for refractory.
+
+**Cost / scheme:** Chirayu / PM-JAY at empanelled hospitals. Janaushadhi has cheap salbutamol inhalers.
+
+**SMS micro-script (Hinglish):** "Seedha bithao haath ghutno par. Asthalin inhaler 2 puff plastic bottle ke jugaad spacer se, 1 min ruko, fir 2 puff — 20 min me 6 tak. Bhaap lo. Chulha dhuaan se door. 108 jab baat na ho ya hoth neele."
+
+### 19. COPD exacerbation (dama-saans phool gayi)
+
+**What the caller likely says:** "Bidi peene wale dadda ji, khaansi badh gayi, balgam zyada, saans phool rahi."
+
+**Triage:** CHC if moderate. 108-NOW if cannot speak, drowsy, blue lips, fever with sputum colour change.
+
+**Do RIGHT NOW:**
+1. Sit upright leaning forward.
+2. Salbutamol inhaler 2 puffs via spacer (plastic bottle), repeat 1 min later.
+3. If patient already has Budecort, take 2 puffs after salbutamol.
+4. Stop smoking immediately. Move away from chulha smoke and hookah.
+5. If patient has prescribed prednisolone for exacerbation — give the prescribed dose.
+6. Steam inhalation 10 min.
+7. Plenty of warm fluids (tulsi-ginger tea, warm water).
+8. Call CHC; 108 if severe.
+
+**Do NOT:**
+- Do NOT continue bidi or hookah.
+- Do NOT lie flat.
+- Do NOT use sleep medication (sedatives can stop breathing).
+
+**Where to go:** PHC for mild. CHC or district hospital with nebulisation/oxygen for severe. PGIMS Rohtak respiratory medicine.
+
+**Cost / scheme:** Chirayu / PM-JAY. Janaushadhi for ipratropium, salbutamol, doxofylline.
+
+**SMS micro-script (Hinglish):** "Bithao seedha. Asthalin 2 puff spacer se, 1 min baad fir 2. Bidi/hookah turant band. Bhaap lo. Garam adrak-tulsi paani. Khichdi balgam ka rang badle to PHC. Saans bahut tej to 108."
+
+### 20. Choking — adult and child (gala ruk gaya)
+
+**What the caller likely says:** "Bachhe ke gale me roti ka tukda atak gaya, saans nahi le pa raha" or "bauji khaate-khaate atak gaye, bol nahi rahe haath gale par".
+
+**Triage:** 108-NOW for complete obstruction (cannot speak, cough, or breathe). HOME first-aid actions while ambulance comes.
+
+**Do RIGHT NOW:**
+
+**Adult or child >1 year, conscious, NOT speaking:**
+1. Stand behind. Lean them slightly forward.
+2. Give 5 sharp back blows between the shoulder blades with the heel of your hand. Check after each.
+3. If still blocked, do 5 abdominal thrusts (Heimlich): stand behind, fist just above the belly button, other hand over fist, sharp inward-and-upward pull. Repeat.
+4. Alternate 5 back blows + 5 abdominal thrusts until object comes out OR patient becomes unconscious.
+5. If unconscious, lay flat, start chest compressions. Look in the mouth before each breath; remove visible object only.
+
+**Infant <1 year:**
+1. Hold the baby face-down along your forearm, head lower than body, support jaw with fingers.
+2. 5 back blows between shoulder blades with heel of hand.
+3. Turn over, face-up along thigh, head still lower than body.
+4. 5 chest thrusts: 2 fingers on lower breastbone, push 4 cm deep.
+5. Alternate 5 back blows + 5 chest thrusts. Do NOT use abdominal thrusts in an infant — liver injury risk.
+
+**Do NOT:**
+- Do NOT hold the patient upside down by the legs and shake (a common village reflex — does not work for solid food).
+- Do NOT do blind finger-sweep — can push the object further down.
+- Do NOT give water, milk, or roti "to push it down".
+
+**Where to go:** PHC or CHC for post-choke evaluation even if cleared. 108 if unconscious or not cleared.
+
+**Cost / scheme:** Chirayu / PM-JAY for any admission.
+
+**SMS micro-script (Hinglish):** "Bada: peechhe khade ho, 5 baar peeth par dhakka shoulder blade ke beech, 5 baar pet par muthhi se andar-upar dhakka. Bachha <1 saal: aulta lita ke peeth par 5, fir seedha kar ke seene par 2 ungli se 5. 108. Roti ya paani mat khilao."
+
+### 21. Pneumonia in adult (nimoniya)
+
+**What the caller likely says:** "3 din se tej bukhar, peeli balgam, seene mein dard, saans tej."
+
+**Triage:** PHC if mild (no fast breath, no chest indrawing, no confusion). CHC or 108-NOW if severe — fast breathing >30/min, oxygen saturation <94% on pulse oximeter (if available, ~30% of homes have one post-COVID), chest indrawing, blue lips, confusion, age >60, diabetes, pregnant.
+
+**Do RIGHT NOW:**
+1. Rest in bed, propped up at 45°.
+2. Plenty of fluids — warm water, tulsi-ginger-honey tea.
+3. Paracetamol 500 mg every 6 h for fever (max 4 in 24 h adult).
+4. Steam inhalation 2× a day, 10 min each.
+5. Count breaths for 60 seconds. Note the result.
+6. If pulse oximeter available, measure SpO2. Below 94% — go to CHC. Below 90% — 108.
+
+**Do NOT:**
+- Do NOT self-prescribe antibiotics from the kirana. Pneumonia needs the right antibiotic, not the leftover one.
+- Do NOT use cold sponging (it shivers and worsens fever).
+- Do NOT lie flat.
+
+**Where to go:** PHC for first review and chest exam. CHC for X-ray and antibiotics. District hospital for severe (oxygen, IV antibiotics, ICU). PGIMS Rohtak for complicated.
+
+**Cost / scheme:** PM-JAY / Chirayu covers admission and antibiotics. Janaushadhi for amoxicillin.
+
+**SMS micro-script (Hinglish):** "Aaram, garam pani, paracetamol 500mg har 6 ghante. Bhaap. Saans 30/min se zyada ya hoth neele to CHC. Pulse oximeter ho aur 94% se kam to CHC, 90% se kam to 108. Antibiotic apne aap nahi."
+
+### 22. Severe respiratory distress in infant (bachhe ki saans tej)
+
+**What the caller likely says:** "Naya bachha doodh nahi pee raha, saans tez chal rahi, seene me gadda bante."
+
+**Triage:** 108-NOW always for any infant <2 months with: fast breathing (≥60/min), severe chest indrawing, grunting, refusing feed, lethargy, fever or hypothermia (≥37.5°C or <35.5°C), seizures, blue around lips. Per IMNCI all young infants with any danger sign require urgent referral.
+
+**Do RIGHT NOW:**
+1. Keep baby warm — wrap in dry cloth, skin-to-skin against mother's chest (kangaroo). Hat on head.
+2. Continue breastfeeding if baby will latch — small frequent sips from a katori-spoon if not.
+3. Clear nose with a clean cloth wick (rolled cotton).
+4. Count breaths for full 60 seconds (look at belly rise). Note number.
+5. Call 108. Ask for newborn-equipped ambulance (102 if available).
+6. Bring baby's vaccination card and ASHA's mother-and-child protection card.
+
+**Do NOT:**
+- Do NOT give honey, water, ghee, sugar water, or gripe water to a young infant.
+- Do NOT bathe a sick newborn.
+- Do NOT give any cough syrup.
+- Do NOT delay because "it might pass".
+
+**Where to go:** SNCU (Sick Newborn Care Unit) at district hospital or CHC. PGIMS Rohtak NICU. KCGMC Karnal NICU. SHKM Nalhar for Mewat. Private: Medanta, Fortis FMRI paediatric/neonatal ICU.
+
+**Cost / scheme:** JSSK guarantees free transport, drugs, diagnostics, and care for sick newborns up to 30 days. Chirayu / PM-JAY for prolonged stays.
+
+**SMS micro-script (Hinglish):** "Bachhe ko maa ke seene se chipka ke garam rakho, topi pehnao. Doodh chusao. Naak saaf karo. Saans 60/min zyada ya seena gadda banta to 108 — JSSK free hai. SNCU vala hospital."
+
+### 23. Acute severe abdominal pain — suspect appendix or perforation (pet mein tez dard)
+
+**What the caller likely says:** "Pet me bahut dard, naabhi ke neeche right side, ulti, bukhar" or "achaanak pet me bahut dard, pet sakht, saans bhi dukhti".
+
+**Triage:** 108-NOW if: pain severe and constant, hard board-like belly, fever with belly pain, vomiting that won't stop, unable to pass stool/wind, blood in stool, pregnant, recent injury. Surgical abdomen until proven otherwise.
+
+**Do RIGHT NOW:**
+1. NOTHING by mouth — no water, no tea, no Eno. Surgery may be needed.
+2. Lie flat with knees bent up over a folded blanket — relaxes abdominal muscles.
+3. Note time of onset, location of worst pain, anything that makes it worse/better, last meal, last stool/urine.
+4. Call 108 or arrange transport to district hospital with surgery.
+
+**Do NOT:**
+- Do NOT give Combiflam, Ibuprofen, Diclofenac — masks symptoms and can cause perforation in ulcer patients.
+- Do NOT apply heat to the belly — bursts an inflamed appendix.
+- Do NOT give Eno, Pudin Hara, ORS, milk — anything by mouth raises aspiration and surgery risk.
+- Do NOT massage the belly.
+
+**Where to go:** District hospital with general surgery + ultrasound. PGIMS Rohtak. ESIC Faridabad. Private: any empanelled centre.
+
+**Cost / scheme:** Chirayu / PM-JAY covers appendicectomy and laparotomy.
+
+**SMS micro-script (Hinglish):** "Khaana paani kuchh nahi. LeTao, ghutne mod ke takhya neeche. Combiflam mat do. Pet par garam sek mat lagao. Eno bhi nahi. 108 ya district hospital — surgery vala. Time aur jagah likho."
+
+### 24. Severe acute diarrhoea + dehydration (cholera-like) (dast aur paani ki kami)
+
+**What the caller likely says:** "Subah se 8 baar dast, paani jaisa, ab kamzori, mooh sookha, peshaab nahi aa raha."
+
+**Triage:** CHC if moderate dehydration (sunken eyes, slow skin pinch, very thirsty). 108-NOW if severe (lethargic, unconscious, no urine for 6 h, weak pulse, very fast breathing, sunken fontanelle in baby).
+
+**Do RIGHT NOW:**
+1. Start ORS immediately. From ASHA: 1 sachet in 1 litre clean (boiled-cooled) water. Without sachet: 1 teaspoon salt + 8 teaspoons sugar in 1 litre boiled-cooled water.
+2. Adult: drink at least 1 lota (200 ml) after every loose stool. Aim for 3 litres in first 4 hours if dehydrated.
+3. Child >2 yr: 100–200 ml after each stool.
+4. Child <2 yr: 50–100 ml after each stool, plus continue breastfeeding.
+5. Zinc tablets (ASHA-issued, 20 mg dispersible): one daily for 14 days, child 6 mo–5 yr. Reduces severity and duration.
+6. If unable to keep ORS down or any severe sign, call 108.
+7. Continue normal food — do not stop food or breastfeeding.
+
+**Do NOT:**
+- Do NOT give Loperamide / Imodium / Eldoper or any "dast band" tablet to a child or to anyone with bloody/mucous stool or fever — can cause toxic megacolon.
+- Do NOT give Norflox or Metrogyl from the kirana without diagnosis — fuels resistance and may worsen.
+- Do NOT stop breastfeeding.
+- Do NOT give plain water alone or salt-only water — wrong osmolarity.
+- Do NOT give sugary cold drinks (Limca, Pepsi) instead of ORS — too much sugar makes dast worse.
+
+**Where to go:** ASHA didi for ORS + zinc. PHC for IV fluids if vomiting + ORS fails. CHC or district hospital for severe. Cholera outbreak: report to ANM and district surveillance unit (IDSP).
+
+**Cost / scheme:** ORS and zinc are free from ASHA. PM-JAY covers admission.
+
+**SMS micro-script (Hinglish):** "ORS turant — ASHA didi se sachet, ya 1 chamach namak + 8 chamach cheeni + 1 litre ubla pani. Har dast ke baad 1 lota. Zinc 14 din. Doodh band mat karo. Behosh ya peshaab band to 108. Loperamide mat khaen."
+
+### 25. Upper GI bleed — haematemesis / melaena (khoon ki ulti / kala paikhana)
+
+**What the caller likely says:** "Coffee jaisa khoon ki ulti, paikhana kala-tarcoal jaisa, kamzori bahut."
+
+**Triage:** 108-NOW. Bleeding peptic ulcer, oesophageal varices (in known liver disease / shrabi), or Mallory-Weiss tear after vomiting.
+
+**Do RIGHT NOW:**
+1. NOTHING by mouth.
+2. Lie on left side. Slightly head-up.
+3. Note approximately how much blood — coffee-cup-half, lota-full, or more. Doctor will ask.
+4. Note if any history of: regular Combiflam/Ibuprofen, alcohol, known peptic ulcer, jaundice, swollen belly.
+5. Call 108. Tell them: "Khoon ki ulti, IV access aur blood needed."
+6. Conserve heat — wrap in a sheet.
+
+**Do NOT:**
+- Do NOT give Eno, milk, antacid, water, or any "thanda karne wala" home remedy.
+- Do NOT give aspirin or any pain killer.
+- Do NOT delay — varices bleed massively.
+
+**Where to go:** District hospital with endoscopy + blood bank + ICU. PGIMS Rohtak gastroenterology. Medanta liver institute.
+
+**Cost / scheme:** Chirayu / PM-JAY covers endoscopy, banding, blood transfusion.
+
+**SMS micro-script (Hinglish):** "108. Kuchh khaana paani nahi. Baayen karwat lita do. Kitna khoon, kab shuru hua likho. Sharab/Combiflam ki history bata dena. PGIMS ya Medanta — endoscopy aur blood bank vala hospital."
+
+### 26. Acute jaundice — suspected hepatitis (piliya)
+
+**What the caller likely says:** "Aankh peeli ho gayi, peshaab geherey rang, kamzori, bhook nahi."
+
+**Triage:** PHC for evaluation. 108-NOW if: confusion / drowsiness (hepatic encephalopathy), bleeding, hard belly, pregnant, child, very high fever.
+
+**Do RIGHT NOW:**
+1. Rest. Avoid all medications unless cleared by doctor — many drugs are processed by liver and can worsen.
+2. Plenty of fluids (boiled-cooled water, fresh nimbu-pani, sugarcane juice if hygienic source).
+3. Light, easy food — khichdi, dalia, rice, banana. Avoid oily and spicy.
+4. NO ALCOHOL of any kind.
+5. Stop paracetamol unless doctor says otherwise — high doses worsen liver injury.
+6. Stop self-prescribed Combiflam, ayurvedic powders (some contain heavy metals), home "liver tonics".
+7. Get tested for HAV, HEV (water-borne, common in Haryana monsoon outbreaks), HBV, HCV at PHC.
+
+**Do NOT:**
+- Do NOT take "jhaad-phoonk" or pillai-paani treatment from local healers — documented delay cause for fulminant hepatitis death.
+- Do NOT eat raw papaya or "jaundice-curing leaves" — no evidence, can be toxic.
+- Do NOT drink alcohol "to flush it out".
+
+**Where to go:** PHC for LFT and hepatitis serology. District hospital for severe / encephalopathy. PGIMS Rohtak hepatology. Medanta Liver Institute Gurugram for transplant assessment.
+
+**Cost / scheme:** Chirayu / PM-JAY at empanelled hospitals. Hepatitis B vaccine free under Universal Immunization for children; available at PHC for adults at cost.
+
+**SMS micro-script (Hinglish):** "Aaram, ubla pani, halki khichdi, banana. Sharab bilkul nahi. Paracetamol/Combiflam band. Jhaad-phoonk mat karwao. PHC me LFT aur hepatitis test. Behoshi/khoon to 108 aur PGIMS."
+
+### 27. Acute urinary retention (peshaab nahi aa raha)
+
+**What the caller likely says:** "12 ghante se peshaab nahi aaya, pet ke neeche bahut dard, gola jaisa hai."
+
+**Triage:** CHC same day for catheterisation. 108 if also fever, blood, severe pain, or post-injury.
+
+**Do RIGHT NOW:**
+1. Try a warm sitz bath: sit in a tub or large patila of comfortably warm water for 15 min. Often relaxes the bladder neck.
+2. Try the sound of running water (a tap left open) or pour warm water over the perineum from a lota — sometimes triggers reflex.
+3. Walk gently if mobile.
+4. Avoid more fluids until catheterised — bladder is already overdistended.
+5. If not relieved in 30 min, go to CHC. Bladder rupture risk above 6–12 hours.
+
+**Do NOT:**
+- Do NOT push hard or strain — risks haemorrhoids and bladder injury.
+- Do NOT give diuretics like furosemide (does not help retention, makes bladder fill faster).
+
+**Where to go:** CHC with catheter + urology referral. District hospital. PGIMS Rohtak urology if recurrent or stones suspected.
+
+**Cost / scheme:** Chirayu / PM-JAY covers urology including TURP for BPH. Janaushadhi for tamsulosin.
+
+**SMS micro-script (Hinglish):** "Garam paani me 15 min baitho. Nal khol ke awaaz suno. Lota se garam paani perineum par. Pani aur mat piyo. 30 min me na ho to CHC — catheter laga ke khaali karenge."
+
+### 28. Renal colic (gurde ka dard)
+
+**What the caller likely says:** "Pith ke dono taraf bahut tez dard, khichta hua peshaab tak, ulti."
+
+**Triage:** PHC for diagnosis (urine + ultrasound). CHC if stone >5 mm, fever (suggests obstruction + infection — emergency), single kidney, pregnant.
+
+**Do RIGHT NOW:**
+1. Drink 2 lota of warm water immediately, then 1 lota every 30 min.
+2. Walk around — movement helps small stones move.
+3. Hot compress on the painful flank (cloth dipped in warm water, wrung).
+4. Diclofenac 50 mg from chemist for pain (one tablet, with food) UNLESS pregnant, ulcer, kidney disease, asthma. Or paracetamol 500 mg if any NSAID contraindication.
+5. Urinate through a strainer (chhanni or fine cloth) to catch stone for analysis.
+6. Go to PHC for urine test + ultrasound.
+
+**Do NOT:**
+- Do NOT take ORS — extra salt is wrong for stones.
+- Do NOT take "patthar todne wali jadi" without doctor — many are nephrotoxic.
+- Do NOT take Combiflam if known peptic ulcer or severe asthma.
+
+**Where to go:** PHC for ultrasound + urine. CHC or district hospital urology. PGIMS Rohtak / Medanta for ESWL or PCNL if stone >7 mm.
+
+**Cost / scheme:** Chirayu / PM-JAY covers stone procedures. Free dialysis programme covers any renal failure complication at government hospitals.
+
+**SMS micro-script (Hinglish):** "Garam pani 2 lota turant, fir har 30 min me 1 lota. Chalein. Dard wali jagah par garam sek. Diclofenac 50mg agar ulcer/garbh nahi. Chhanni se peshaab — pathar pakdo. PHC me ultrasound."
+
+### 29. Postpartum haemorrhage (bachha hone ke baad khoon)
+
+**What the caller likely says:** "Bachha ho gaya ghar par, ab maa ka khoon ruk nahi raha, kapde bhar gaye."
+
+**Triage:** 108-NOW. PPH affects ~12% of Indian deliveries and is the leading cause of maternal mortality. Atonic uterus is the commonest cause.
+
+**Do RIGHT NOW:**
+1. Call 108 / 102 immediately.
+2. **Misoprostol** — if ASHA didi has issued misoprostol tablets (some Haryana ASHA kits include it for PPH prevention/management): 600 microgram (3 tablets of 200 mcg) given orally OR 800 mcg per rectum.
+3. **Uterine massage:** place both hands over the lower belly. Feel the uterus as a hard ball just below the navel. If it feels soft (boggy), massage firmly with circular motion until it becomes hard. Continue every 15 min.
+4. **Bladder empty:** make her urinate or insert a catheter at PHC level — full bladder prevents uterus contracting.
+5. **Breastfeed the baby** immediately — release of natural oxytocin helps the uterus contract.
+6. Lay her flat. Raise her legs on a folded blanket / brick (legs above heart).
+7. Keep her warm — wrap in dry sheet.
+8. Stop visible bleeding outside the body by direct pressure on perineal tear with clean folded cloth.
+9. NOTHING by mouth.
+
+**Do NOT:**
+- Do NOT pull on the umbilical cord to deliver placenta — risks inversion. Wait for 102/108.
+- Do NOT stuff cloth or cotton inside the vagina — increases infection.
+- Do NOT give Combiflam or aspirin — worsen bleeding.
+- Do NOT delay for the dai's herbs.
+
+**Where to go:** Nearest CHC / FRU with blood storage + emergency obstetrics. District hospital. PGIMS Rohtak OB. KCGMC Karnal. SHKM Nalhar. BPS GMC Khanpur Kalan. Tell 102: "Delivery ho gayi, khoon zyada, PPH."
+
+**Cost / scheme:** JSSK guarantees free delivery, C-section, drugs, diagnostics, blood, and transport for the mother. PM-JAY covers complications.
+
+**SMS micro-script (Hinglish):** "108/102 abhi. Pet par dono haath rakh ke gola jaisa firm karo, har 15 min maalish. Bachhe ko doodh chusao. Peshaab karwao. Misoprostol ho to 3 goli (600 mcg) khilao. Paer takhya pe ooncha. Yoni me ruyi mat dalo."
+
+### 30. Eclampsia / severe pre-eclampsia (garbh mein dauraa)
+
+**What the caller likely says:** "Garbhwati ki achaanak jhatke aaye, behosh hai, BP 180/120 hai" or pre-eclampsia: "Sir bahut dard, dhundla dikh raha, paer soojan, garbh me 8 mahina."
+
+**Triage:** 108-NOW. Eclampsia is a leading killer in pregnancy. Magnesium sulfate is the proven treatment but is restricted to higher facilities under Indian EML.
+
+**Do RIGHT NOW:**
+1. Call 108 / 102 immediately. State: "Garbh me dauraa, eclampsia."
+2. Lie her on the LEFT side on the charpai. Place a folded blanket under the right hip to tilt the uterus off the major vein.
+3. Protect from injury during the seizure — clear hard objects, place a folded cloth under her head, do not restrain her.
+4. Do NOT put anything in her mouth — no spoon, no cloth wedge. Tongue-bite is preferable to a chipped tooth blocking the airway.
+5. After seizure: clear mouth with finger wrapped in cloth (only visible secretions). Place in left-lateral recovery position.
+6. Loosen tight clothes.
+7. Note: time of seizure, duration, what was happening before, BP if a machine is available, pregnancy week, any medications.
+8. NOTHING by mouth.
+9. If trained ANM or PHC reachable: magnesium sulfate is the first-line agent (4 g IV over 5 min + 10 g IM loading per WHO/FOGSI). PHC-level may have it; CHC certainly should.
+
+**Do NOT:**
+- Do NOT give diazepam first — magnesium sulfate is superior.
+- Do NOT pour water on the face during a seizure.
+- Do NOT delay for "lakshmi pooja" / "evil eye" interventions.
+- Do NOT make her sit up.
+
+**Where to go:** CHC with C-section + FRU. District hospital with OB. PGIMS Rohtak OB. KCGMC. SHKM Nalhar. BPS GMC Khanpur Kalan (women-only).
+
+**Cost / scheme:** JSSK covers all maternal complications including C-section, drugs, diagnostics, transport. PM-JAY for ICU.
+
+**SMS micro-script (Hinglish):** "108 abhi. Baayen karwat litao, daayen kulhe ke neeche kapda. Mooh me kuchh mat dalo. Cheez chot lagne wali hatao. Time aur ghar me jo ho raha tha likho. CHC ya PGIMS — magnesium sulfate dengay."
+
