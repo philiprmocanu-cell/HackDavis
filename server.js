@@ -7,6 +7,13 @@ import dotenv from "dotenv";
 import express from "express";
 import OpenAI from "openai";
 
+import { findRtkInMessage } from "./lib/curriculumDirectory.js";
+import {
+  attachEducationVoiceRoutes,
+  logEducationVoiceConfig,
+  maybePlaceEducationVoiceCall,
+} from "./lib/educationVoiceCallback.js";
+import { generateEducationVoiceScript } from "./lib/educationVoiceScript.js";
 import {
   attachMedicalVoiceRoutes,
   logMedicalVoiceConfig,
@@ -258,6 +265,7 @@ app.get("/health", (_req, res) => {
 });
 
 attachMedicalVoiceRoutes(app);
+attachEducationVoiceRoutes(app);
 
 app.post(WEBHOOK_PATH, async (req, res) => {
   const signingKey = process.env.WEBHOOK_SIGNING_KEY;
@@ -374,6 +382,40 @@ app.post(WEBHOOK_PATH, async (req, res) => {
       }
     }
 
+    const rtkMatch = findRtkInMessage(message);
+    const skipEducationVoice =
+      reply === FALLBACK_SMS_REPLY ||
+      structured.medical_escalation === MEDICAL_ESCALATION_VOICE_CALLBACK ||
+      shouldEscalate;
+    if (rtkMatch && !skipEducationVoice) {
+      const eduOn = String(process.env.EDUCATION_VOICE_ENABLED || "").toLowerCase();
+      if (eduOn === "1" || eduOn === "true" || eduOn === "yes") {
+        try {
+          const eduMode = String(process.env.EDUCATION_VOICE_MODE || "tts").trim().toLowerCase();
+          const useConversation =
+            eduMode === "conversation" || eduMode === "agent" || eduMode === "convai";
+
+          if (useConversation) {
+            await maybePlaceEducationVoiceCall({
+              toE164: to,
+              lesson: { code: rtkMatch.code, directoryLine: rtkMatch.directoryLine },
+              userMessage: message,
+            });
+          } else {
+            const script = await generateEducationVoiceScript({
+              openai,
+              userMessage: message,
+              directoryLine: rtkMatch.directoryLine,
+              code: rtkMatch.code,
+            });
+            await maybePlaceEducationVoiceCall({ toE164: to, script });
+          }
+        } catch (err) {
+          console.error("[education-voice] callback hook:", err?.message || err);
+        }
+      }
+    }
+
     return res.status(200).json({ ok: true });
   } catch (err) {
     rollbackSmsWebhookDedupe(activeDedupeKey);
@@ -384,5 +426,6 @@ app.post(WEBHOOK_PATH, async (req, res) => {
 
 app.listen(PORT, () => {
   logMedicalVoiceConfig();
+  logEducationVoiceConfig();
   console.log(`Listening on ${PORT}${WEBHOOK_PATH}`);
 });
