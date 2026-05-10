@@ -7,6 +7,19 @@ import dotenv from "dotenv";
 import express from "express";
 import OpenAI from "openai";
 
+import {
+  attachMedicalVoiceRoutes,
+  logMedicalVoiceConfig,
+  maybePlaceMedicalCallback,
+} from "./lib/medicalVoiceCallback.js";
+import { MEDICAL_ESCALATION_VOICE_CALLBACK, parseModelCompletion } from "./lib/modelJson.js";
+import {
+  beginSmsWebhookDedupe,
+  commitSmsWebhookDedupe,
+  rollbackSmsWebhookDedupe,
+  smsReceivedDedupeKey,
+} from "./lib/smsWebhookDedupe.js";
+
 dotenv.config();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -16,8 +29,9 @@ const MAX_SENTENCES = 3;
 /** Short prompt used when `system-prompt.md` is missing and on artifact retry. */
 const MINIMAL_JSON_SUFFIX = `
 
-Respond ONLY with valid JSON (no markdown fences): {"sms_reply":"<SMS text>"}.
-The sms_reply value is normal human language only — never filenames, paths, UUIDs, hex digests, or extensions like .rtfd .pdf .ts. Escape inner quotes as \\".`;
+Respond ONLY with valid JSON (no markdown fences): {"sms_reply":"<SMS text>","medical_escalation":"none"}.
+The sms_reply value is normal human language only — never filenames, paths, UUIDs, hex digests, or extensions like .rtfd .pdf .ts. Escape inner quotes as \\".
+medical_escalation MUST be exactly "none" or "voice_callback". Always use "none" in this short retry path — never trigger a voice callback from here.`;
 
 const MINIMAL_SMS_SYSTEM = `You answer SMS questions only for the general public. Reply in plain language, at most ${MAX_SENTENCES} short sentences.
 Never mention source code, files, TypeScript, prompts, developers, line counts, or that anything was written or saved. Answer only what the user asked.${MINIMAL_JSON_SUFFIX}`;
@@ -27,6 +41,9 @@ const FALLBACK_SMS_REPLY =
 
 /** Pull sms_reply from JSON or fenced JSON; fall back to raw string if parsing fails. */
 function extractSmsReplyPayload(raw) {
+  const parsed = parseModelCompletion(raw);
+  if (parsed.sms_reply && parsed.sms_reply.length > 0) return parsed.sms_reply;
+
   let s = String(raw || "").trim();
   if (!s) return "";
   const fence = s.match(/^```(?:json)?\s*([\s\S]*?)```$/i);
@@ -130,7 +147,7 @@ function scrubAgentEcho(text) {
     if (x.includes("containing the response framework")) return false;
     if (/\btypescript\b/.test(x) || /\.tsx?\b/.test(x)) return false;
     if (/\.rtfd\b|\.rtf\b/i.test(x)) return false;
-    if (/\b[a-f0-9]{20,}\.[a-z]{2,12}\b/i.test(p)) return false;
+    if (/\b[a-f0-9]{20,}\.[a-z]{2,12}\b/i.test(x)) return false;
     return true;
   });
   const out = kept.join(" ").trim().replace(/\s+/g, " ");
@@ -240,6 +257,8 @@ app.get("/health", (_req, res) => {
   res.status(200).json({ ok: true });
 });
 
+attachMedicalVoiceRoutes(app);
+
 app.post(WEBHOOK_PATH, async (req, res) => {
   const signingKey = process.env.WEBHOOK_SIGNING_KEY;
   if (signingKey) {
@@ -256,6 +275,9 @@ app.post(WEBHOOK_PATH, async (req, res) => {
     }
   }
 
+  /** Active dedupe slot for this webhook; rolled back if handler errors before outbound SMS succeeds. */
+  let activeDedupeKey = null;
+
   try {
     const body = req.body;
     if (!body || body.event !== "sms:received") {
@@ -270,8 +292,16 @@ app.post(WEBHOOK_PATH, async (req, res) => {
       return res.status(200).json({ ok: true, skipped: true });
     }
 
+    const { key: dedupeKey } = smsReceivedDedupeKey(body);
+    if (!beginSmsWebhookDedupe(dedupeKey)) {
+      console.warn("[sms] duplicate webhook skipped (sms-gate retry or concurrent delivery)");
+      return res.status(200).json({ ok: true, skipped: true, duplicate: true });
+    }
+    activeDedupeKey = dedupeKey;
+
     if (!openai) {
       console.error("OPENAI_API_KEY is not set");
+      rollbackSmsWebhookDedupe(activeDedupeKey);
       return res.status(500).json({ error: "missing_openai_key" });
     }
 
@@ -327,15 +357,32 @@ app.post(WEBHOOK_PATH, async (req, res) => {
     }
 
     const to = normalizeE164(sender);
+    const structured = parseModelCompletion(raw);
+
     await sendSms([to], reply);
+    commitSmsWebhookDedupe(activeDedupeKey);
+
+    const shouldEscalate =
+      structured.medical_escalation === MEDICAL_ESCALATION_VOICE_CALLBACK &&
+      reply !== FALLBACK_SMS_REPLY;
+
+    if (shouldEscalate) {
+      try {
+        await maybePlaceMedicalCallback({ toE164: to, smsUserMessage: message });
+      } catch (err) {
+        console.error("[medical-voice] callback hook:", err?.message || err);
+      }
+    }
 
     return res.status(200).json({ ok: true });
   } catch (err) {
+    rollbackSmsWebhookDedupe(activeDedupeKey);
     console.error(err);
     return res.status(500).json({ error: "handler_failed" });
   }
 });
 
 app.listen(PORT, () => {
+  logMedicalVoiceConfig();
   console.log(`Listening on ${PORT}${WEBHOOK_PATH}`);
 });
